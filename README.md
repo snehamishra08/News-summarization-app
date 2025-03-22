@@ -18,14 +18,16 @@ This project extracts news articles related to a given company, analyzes sentime
 
 ## 📂 Folder Structure
 2. Install Required Libraries
-    bash
-    Copy
-    Edit
-    pip install -r requirements.txt
-3. Run Flask Backend (API)
-     python api.py
-4. Run Streamlit Interface (Coming Next 😉)
-    streamlit run app.py
+
+        pip install -r requirements.txt
+   
+4. Run Flask Backend (API)
+   
+       python api.py
+   
+6. Run Streamlit Interface (Coming Next 😉)
+
+       streamlit run app.py
 
    
 🎯 API Endpoints
