@@ -1,0 +1,7 @@
+beautifulsoup4
+feedparser
+nltk
+vaderSentiment
+gtts
+streamlit
+flask
