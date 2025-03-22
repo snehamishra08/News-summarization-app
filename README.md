@@ -31,7 +31,7 @@ This project extracts news articles related to a given company, analyzes sentime
 🎯 API Endpoints
 1. /fetch_news – Fetch and Analyze News
     Method: POST
-      Payload:
+   Payload:
       
           {
             "company_name": "Tesla"
@@ -45,7 +45,7 @@ This project extracts news articles related to a given company, analyzes sentime
         }
 2. /generate_audio – Generate Hindi Audio Summary
     Method: POST
-      Payload:
+    Payload:
 
         {
           "summary_text": "Summary of the sentiment analysis..."
@@ -64,6 +64,8 @@ This project extracts news articles related to a given company, analyzes sentime
    4. BeautifulSoup, Feedparser (Web Scraping)
    5. NLTK (Sentiment & Topic Analysis)
    6. gTTS (Text-to-Speech)
+
+
 
     
 👨‍💻 Author
