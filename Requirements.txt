@@ -1,7 +1,8 @@
-beautifulsoup4
-feedparser
-nltk
-vaderSentiment
-gtts
-streamlit
-flask
+Flask==3.0.0
+flask-cors==4.0.0
+streamlit==1.33.0
+beautifulsoup4==4.12.3
+nltk==3.8.1
+requests==2.31.0
+googletrans==4.0.0-rc1
+gTTS==2.5.1
