@@ -8,11 +8,21 @@ from nltk.corpus import stopwords
 from googletrans import Translator
 from gtts import gTTS
 import os
+import tempfile
 
 # Download required NLTK packages
 nltk.download('vader_lexicon')
 nltk.download('punkt')
 nltk.download('stopwords')
+
+import os
+
+# Setting path dynamically depending on environment
+def get_audio_path():
+    if "HUGGINGFACE_SPACE" in os.environ:
+        return "/tmp/audio.mp3"  # For Hugging Face
+    else:
+        return "audio.mp3"  # For local testing
 
 
 def extract_news(company_name):
@@ -148,7 +158,12 @@ def text_to_speech(text, language="hi"):
 
         # Generate audio using gTTS
         tts = gTTS(text=translated_text, lang=language)
-        audio_path = "audio.mp3"
+
+        # Create a temporary directory to save audio
+        temp_dir = tempfile.gettempdir()
+        audio_path = os.path.join(temp_dir, "audio.mp3")
+
+        # Save the generated audio to the path
         tts.save(audio_path)
 
         # Return the path to the generated audio file
@@ -156,4 +171,4 @@ def text_to_speech(text, language="hi"):
 
     except Exception as e:
         print(f"Error during translation or TTS: {e}")
-        return "Error generating audio"
+        return None
