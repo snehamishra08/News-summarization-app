@@ -1,5 +1,6 @@
 import streamlit as st
 import base64
+import os
 from utils import (
     extract_news,
     analyze_sentiment,
@@ -11,7 +12,7 @@ from utils import (
 )
 
 # Streamlit Web Interface
-st.title("News Summarization and Sentiment Analysis")
+st.title("📰 News Summarization and Sentiment Analysis")
 company_name = st.text_input("Enter Company Name")
 
 if company_name:
@@ -37,18 +38,37 @@ if company_name:
             "Topics": topics
         })
 
-    # Comparative Sentiment
+    # Generate Comparative Sentiment Score
     summary_data["Comparative Sentiment Score"] = comparative_analysis(summary_data["Articles"])
     summary_data["Final Sentiment Analysis"] = generate_final_sentiment(summary_data)
 
-    # Generate and encode audio for TTS
+    # 🎙️ Generate Audio for Hindi TTS
     try:
         audio_path = text_to_speech(summary_data["Final Sentiment Analysis"], language="hi")
-        with open(audio_path, "rb") as audio_file:
-            audio_base64 = base64.b64encode(audio_file.read()).decode("utf-8")
-    except Exception as e:
-        audio_base64 = f"Error generating audio: {str(e)}"
 
+        if audio_path and os.path.exists(audio_path):
+            # Read and play the generated audio
+            with open(audio_path, "rb") as audio_file:
+                audio_bytes = audio_file.read()
+
+            # 🎧 Play the audio in Streamlit
+            st.header("🎙️ Hindi TTS")
+            st.audio(audio_bytes, format="audio/mp3")
+
+            # 📥 Provide a download button for the audio
+            st.download_button(
+                label="⬇️ Download Audio",
+                data=audio_bytes,
+                file_name="audio.mp3",
+                mime="audio/mp3"
+            )
+        else:
+            st.error("❌ Error generating audio.")
+    except Exception as e:
+        st.error(f"⚠️ Error generating audio: {str(e)}")
+
+
+        
     # Display Summary
     st.header("News Summary Report")
     for article_data in summary_data["Articles"]:
@@ -64,18 +84,3 @@ if company_name:
     # Final Sentiment
     st.header("Final Sentiment Analysis")
     st.write(summary_data["Final Sentiment Analysis"])
-
-    # Audio Generation for Hindi TTS
-    try:
-        audio_path = text_to_speech(summary_data["Final Sentiment Analysis"], language="hi")
-
-        # Read the generated audio file as binary and encode it as base64
-        with open(audio_path, "rb") as audio_file:
-            audio_bytes = audio_file.read()
-        
-        st.header("Hindi TTS")
-        st.audio(audio_bytes, format="audio/mp3")
-
-    except Exception as e:
-        st.error(f"Error generating audio: {str(e)}")
-
